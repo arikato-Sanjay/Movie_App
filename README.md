@@ -1,3 +1,4 @@
 # movie_app
 
-TMDb powered movie app
+In progress !!
+A movie app backed with TMDb API.
