@@ -4,13 +4,19 @@ import 'package:movie_app/data_layer/core/api_client.dart';
 import 'package:movie_app/data_layer/data_source/movies_remote_data.dart';
 import 'package:movie_app/data_layer/repositories/movies_repositories_imple.dart';
 import 'package:movie_app/domain_layer/repositories/movies_repositories.dart';
+import 'package:movie_app/domain_layer/usecases/get_movie_cast.dart';
+import 'package:movie_app/domain_layer/usecases/get_movie_detail.dart';
+import 'package:movie_app/domain_layer/usecases/get_movie_trailer.dart';
 import 'package:movie_app/domain_layer/usecases/get_playing_now.dart';
 import 'package:movie_app/domain_layer/usecases/get_popular.dart';
 import 'package:movie_app/domain_layer/usecases/get_trending.dart';
 import 'package:movie_app/domain_layer/usecases/get_upcoming.dart';
 import 'package:movie_app/presentation_layer/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:movie_app/presentation_layer/blocs/movie_carousel/movie_carousel_bloc.dart';
+import 'package:movie_app/presentation_layer/blocs/movie_cast/movie_cast_bloc.dart';
+import 'package:movie_app/presentation_layer/blocs/movie_details/movie_details_bloc.dart';
 import 'package:movie_app/presentation_layer/blocs/movie_tabbed/movie_tabbed_bloc.dart';
+import 'package:movie_app/presentation_layer/blocs/movie_trailer/movie_trailer_bloc.dart';
 
 //static instance of get_it
 final getItInstance = GetIt.I;
@@ -46,7 +52,18 @@ Future init() async {
   getItInstance.registerLazySingleton<MoviesRepositories>(
       () => MoviesRepositoriesImplementation(getItInstance()));
 
+  getItInstance.registerLazySingleton<GetMovieDetails>(
+      () => GetMovieDetails(getItInstance()));
+
+  getItInstance
+      .registerLazySingleton<GetMovieCast>(() => GetMovieCast(getItInstance()));
+
+  getItInstance.registerLazySingleton<GetMovieTrailer>(
+      () => GetMovieTrailer(getItInstance()));
+
   //di for bloc
+
+  //movie carousel bloc di
   getItInstance.registerFactory(
     () => MovieCarouselBloc(
       getTrending: getItInstance(),
@@ -54,10 +71,26 @@ Future init() async {
     ),
   );
 
+  //backdrop bloc di
   getItInstance.registerFactory(() => MovieBackdropBloc());
 
+  //movie tab bloc di
   getItInstance.registerFactory(() => MovieTabbedBloc(
-      getPopular: GetPopular(getItInstance()),
-      getPlayingNow: GetPlayingNow(getItInstance()),
-      getUpComing: GetUpComing(getItInstance())));
+      getPopular: getItInstance(),
+      getPlayingNow: getItInstance(),
+      getUpComing: getItInstance()));
+
+  //movie details bloc di
+  getItInstance.registerFactory(() => MovieDetailsBloc(
+      getMovieDetails: getItInstance(),
+      movieCastBloc: getItInstance(),
+      movieTrailerBloc: getItInstance()));
+
+  //movie cast bloc
+  getItInstance
+      .registerFactory(() => MovieCastBloc(getMovieCast: getItInstance()));
+
+  //movie trailer bloc
+  getItInstance.registerFactory(
+      () => MovieTrailerBloc(getMovieTrailer: getItInstance()));
 }

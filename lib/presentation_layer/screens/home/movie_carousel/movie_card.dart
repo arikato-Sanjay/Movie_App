@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
 import 'package:movie_app/data_layer/core/api_constants.dart';
 import 'package:movie_app/common/extensions/size_extensions.dart';
+import 'package:movie_app/presentation_layer/screens/movie_details/movie_detail_arguments.dart';
+import 'package:movie_app/presentation_layer/screens/movie_details/movie_details_screen.dart';
 
 class MoviesCard extends StatelessWidget {
   final int movieId;
@@ -17,7 +19,11 @@ class MoviesCard extends StatelessWidget {
       elevation: 32,
       borderRadius: BorderRadius.circular(AppSizes.size_16.w),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => MovieDetailsScreen(
+                  movieDetailsArguments: MovieDetailsArguments(movieId))));
+        },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(AppSizes.size_16.w),
           child: CachedNetworkImage(

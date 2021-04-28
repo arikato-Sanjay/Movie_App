@@ -5,12 +5,12 @@ class MovieDetailEntities extends Equatable {
   final String title;
   final String overview;
   final String releaseDate;
-  final num voteAverage;
+  final double voteAverage;
   final String backdropPath;
   final String posterPath;
 
-  const MovieDetailEntities(this.id, this.title, this.overview,
-      this.releaseDate, this.voteAverage, this.backdropPath, this.posterPath);
+  const MovieDetailEntities({this.id, this.title, this.overview,
+      this.releaseDate, this.voteAverage, this.backdropPath, this.posterPath});
 
   @override
   List<Object> get props => [id];
