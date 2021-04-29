@@ -98,4 +98,16 @@ class MoviesRepositoriesImplementation extends MoviesRepositories {
       return Left(AppError(AppErrorType.api));
     }
   }
+
+  @override
+  Future<Either<AppError, List<MoviesModel>>> getSearchedMovie(String searchTerm) async {
+    try{
+      final searchedMovies = await remoteData.getSearchedMovies(searchTerm);
+      return Right(searchedMovies);
+    } on SocketException{
+      return Left(AppError(AppErrorType.network));
+    } on Exception {
+      return Left(AppError(AppErrorType.api));
+    }
+  }
 }

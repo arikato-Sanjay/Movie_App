@@ -78,7 +78,7 @@ class CastModel extends MovieCastEntity {
       name: json['name'],
       originalName: json['original_name'],
       popularity: json['popularity'],
-      profilePath: json['profile_path']?.toString() ?? '',
+      profilePath: json['profile_path'],
       castId: json['cast_id'],
       character: json['character'],
       creditId: json['credit_id'],

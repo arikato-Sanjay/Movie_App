@@ -7,12 +7,20 @@ import 'package:movie_app/data_layer/models/movies_result_model.dart';
 
 abstract class MoviesRemoteData {
   Future<List<MoviesModel>> getTrending();
+
   Future<List<MoviesModel>> getPopular();
+
   Future<List<MoviesModel>> getPlayingNow();
+
   Future<List<MoviesModel>> getUpComing();
+
   Future<MovieDetailsModel> getMovieDetails(int id);
+
   Future<List<CastModel>> getMovieCast(int id);
+
   Future<List<MovieTrailer>> getMovieTrailer(int id);
+
+  Future<List<MoviesModel>> getSearchedMovies(String searchTerm);
 }
 
 class MoviesRemoteDataImplementation extends MoviesRemoteData {
@@ -71,8 +79,18 @@ class MoviesRemoteDataImplementation extends MoviesRemoteData {
   @override
   Future<List<MovieTrailer>> getMovieTrailer(int id) async {
     final movieTrailerResponse = await _client.get('movie/$id/videos');
-    final movieTrailer = MovieTrailerModel.fromJson(movieTrailerResponse).trailers;
+    final movieTrailer =
+        MovieTrailerModel.fromJson(movieTrailerResponse).trailers;
     print(movieTrailer);
     return movieTrailer;
+  }
+
+  @override
+  Future<List<MoviesModel>> getSearchedMovies(String searchTerm) async {
+    final searchMovieResponse =
+        await _client.get('search/movie', params: {'query': searchTerm});
+    final searchMovie = MoviesResultModel.fromJson(searchMovieResponse).movies;
+    print(searchMovie);
+    return searchMovie;
   }
 }

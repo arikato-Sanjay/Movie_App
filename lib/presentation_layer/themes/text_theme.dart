@@ -51,4 +51,7 @@ extension ThemeTextExtension on TextTheme {
 
   TextStyle get vulcanBodyText2 => bodyText2.copyWith(
       color: ColorsTheme.vulcan, fontWeight: FontWeight.w600);
+
+  TextStyle get greyCaption => caption.copyWith(
+      color: Colors.grey, fontWeight: FontWeight.w600);
 }
