@@ -6,23 +6,23 @@ import 'package:movie_app/presentation_layer/screens/movie_trailers/trailer_argu
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:movie_app/common/extensions/size_extensions.dart';
 
-class TrailerScreen extends StatefulWidget {
-  final TrailerArguments trailerArguments;
+class MovieTrailerScreen extends StatefulWidget {
+  final MovieTrailerArguments movieTrailerArguments;
 
-  const TrailerScreen({Key key, @required this.trailerArguments})
+  const MovieTrailerScreen({Key key, @required this.movieTrailerArguments})
       : super(key: key);
 
   @override
-  _TrailerScreenState createState() => _TrailerScreenState();
+  _MovieTrailerScreenState createState() => _MovieTrailerScreenState();
 }
 
-class _TrailerScreenState extends State<TrailerScreen> {
+class _MovieTrailerScreenState extends State<MovieTrailerScreen> {
   List<MovieTrailerEntities> trailers;
   YoutubePlayerController _controller;
 
   @override
   void initState() {
-    trailers = widget.trailerArguments.trailers;
+    trailers = widget.movieTrailerArguments.trailers;
     _controller = YoutubePlayerController(
         initialVideoId: trailers[0].key,
         flags: YoutubePlayerFlags(autoPlay: true, mute: true));

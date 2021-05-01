@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/common/constants/routes_list.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
 import 'package:movie_app/common/constants/string_constants.dart';
 import 'package:movie_app/common/extensions/size_extensions.dart';
 import 'package:movie_app/presentation_layer/screens/drawer/navigation_list.dart';
+import 'package:movie_app/presentation_layer/screens/movie_fav/fav_movie_screen.dart';
 import 'package:movie_app/presentation_layer/widgets/about_dialog.dart';
 import 'package:movie_app/presentation_layer/widgets/logo.dart';
 import 'package:wiredash/wiredash.dart';
@@ -33,7 +35,11 @@ class NavigationDrawer extends StatelessWidget {
                 height: AppSizes.size_20.h,
               ),
             ),
-            NavigationList(title: 'Favourite Movie', onTap: () {}),
+            NavigationList(
+                title: 'Favourite Movie',
+                onTap: () {
+                  Navigator.of(context).pushNamed(RoutesList.movieFav);
+                }),
             NavigationList(
                 title: 'Feedback',
                 onTap: () {

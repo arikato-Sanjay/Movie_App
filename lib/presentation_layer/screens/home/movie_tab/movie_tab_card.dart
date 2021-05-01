@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/common/constants/routes_list.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
 import 'package:movie_app/data_layer/core/api_constants.dart';
 import 'package:movie_app/common/extensions/size_extensions.dart';
@@ -22,21 +23,20 @@ class MovieTabCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => MovieDetailsScreen(
-                movieDetailsArguments: MovieDetailsArguments(movieId))));
+        Navigator.of(context).pushNamed(RoutesList.movieDetail,
+            arguments: MovieDetailsArguments(movieId));
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(AppSizes.size_16.w),
-                child: CachedNetworkImage(
-                  imageUrl: '${ApiConstants.base_image_url}$posterPath',
-                  fit: BoxFit.cover,
-                ),
-              )),
+            borderRadius: BorderRadius.circular(AppSizes.size_16.w),
+            child: CachedNetworkImage(
+              imageUrl: '${ApiConstants.base_image_url}$posterPath',
+              fit: BoxFit.cover,
+            ),
+          )),
           Padding(
             padding: EdgeInsets.only(top: AppSizes.size_4.h),
             child: Text(

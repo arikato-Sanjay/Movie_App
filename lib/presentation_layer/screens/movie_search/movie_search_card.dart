@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/common/constants/routes_list.dart';
 import 'package:movie_app/common/constants/size_constants.dart';
 import 'package:movie_app/data_layer/core/api_constants.dart';
 import 'package:movie_app/domain_layer/entities/movies_entities.dart';
@@ -17,9 +18,8 @@ class MovieSearchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MovieDetailsScreen(
-              movieDetailsArguments: MovieDetailsArguments(movie.id)))),
+      onTap: () => Navigator.of(context).pushNamed(RoutesList.movieDetail,
+          arguments: MovieDetailsArguments(movie.id)),
       child: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: AppSizes.size_16.w, vertical: AppSizes.size_2.h),

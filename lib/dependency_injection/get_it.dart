@@ -1,9 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 import 'package:movie_app/data_layer/core/api_client.dart';
+import 'package:movie_app/data_layer/data_source/movies_local_data.dart';
 import 'package:movie_app/data_layer/data_source/movies_remote_data.dart';
 import 'package:movie_app/data_layer/repositories/movies_repositories_imple.dart';
 import 'package:movie_app/domain_layer/repositories/movies_repositories.dart';
+import 'package:movie_app/domain_layer/usecases/check_fav.dart';
+import 'package:movie_app/domain_layer/usecases/delete_fav_movie.dart';
+import 'package:movie_app/domain_layer/usecases/get_fav_movie.dart';
 import 'package:movie_app/domain_layer/usecases/get_movie_cast.dart';
 import 'package:movie_app/domain_layer/usecases/get_movie_detail.dart';
 import 'package:movie_app/domain_layer/usecases/get_movie_trailer.dart';
@@ -12,10 +16,12 @@ import 'package:movie_app/domain_layer/usecases/get_popular.dart';
 import 'package:movie_app/domain_layer/usecases/get_searched_movie.dart';
 import 'package:movie_app/domain_layer/usecases/get_trending.dart';
 import 'package:movie_app/domain_layer/usecases/get_upcoming.dart';
+import 'package:movie_app/domain_layer/usecases/save_movie.dart';
 import 'package:movie_app/presentation_layer/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:movie_app/presentation_layer/blocs/movie_carousel/movie_carousel_bloc.dart';
 import 'package:movie_app/presentation_layer/blocs/movie_cast/movie_cast_bloc.dart';
 import 'package:movie_app/presentation_layer/blocs/movie_details/movie_details_bloc.dart';
+import 'package:movie_app/presentation_layer/blocs/movie_fav/movie_fav_bloc.dart';
 import 'package:movie_app/presentation_layer/blocs/movie_search/movie_search_bloc.dart';
 import 'package:movie_app/presentation_layer/blocs/movie_tabbed/movie_tabbed_bloc.dart';
 import 'package:movie_app/presentation_layer/blocs/movie_trailer/movie_trailer_bloc.dart';
@@ -41,6 +47,10 @@ Future init() async {
   getItInstance.registerLazySingleton<MoviesRemoteData>(
       () => MoviesRemoteDataImplementation(getItInstance()));
 
+  //MovieLocalData depends on local db
+  getItInstance.registerLazySingleton<MoviesLocalData>(
+      () => MoviesLocalDataImplementation());
+
   //all use cases are dependent on movie repository
   getItInstance
       .registerLazySingleton<GetTrending>(() => GetTrending(getItInstance()));
@@ -52,7 +62,7 @@ Future init() async {
       () => GetPlayingNow(getItInstance()));
 
   getItInstance.registerLazySingleton<MoviesRepositories>(
-      () => MoviesRepositoriesImplementation(getItInstance()));
+      () => MoviesRepositoriesImplementation(getItInstance(), getItInstance()));
 
   getItInstance.registerLazySingleton<GetMovieDetails>(
       () => GetMovieDetails(getItInstance()));
@@ -65,6 +75,18 @@ Future init() async {
 
   getItInstance.registerLazySingleton<GetSearchedMovie>(
       () => GetSearchedMovie(getItInstance()));
+
+  getItInstance
+      .registerLazySingleton<SaveMovie>(() => SaveMovie(getItInstance()));
+
+  getItInstance
+      .registerLazySingleton<GetFavMovies>(() => GetFavMovies(getItInstance()));
+
+  getItInstance.registerLazySingleton<DeleteFavMovie>(
+      () => DeleteFavMovie(getItInstance()));
+
+  getItInstance.registerLazySingleton<CheckFavMovie>(
+      () => CheckFavMovie(getItInstance()));
 
   //di for bloc
 
@@ -89,7 +111,9 @@ Future init() async {
   getItInstance.registerFactory(() => MovieDetailsBloc(
       getMovieDetails: getItInstance(),
       movieCastBloc: getItInstance(),
-      movieTrailerBloc: getItInstance()));
+      movieTrailerBloc: getItInstance(),
+      movieFavBloc: getItInstance()
+  ));
 
   //movie cast bloc
   getItInstance
@@ -102,4 +126,11 @@ Future init() async {
   //movie search bloc
   getItInstance.registerFactory(
       () => MovieSearchBloc(getSearchedMovie: getItInstance()));
+
+  //movie fav bloc
+  getItInstance.registerFactory(() => MovieFavBloc(
+      saveMovie: getItInstance(),
+      getFavMovies: getItInstance(),
+      deleteFavMovie: getItInstance(),
+      checkFavMovie: getItInstance()));
 }

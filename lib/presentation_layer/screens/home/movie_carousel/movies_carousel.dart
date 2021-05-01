@@ -3,8 +3,8 @@ import 'package:movie_app/domain_layer/entities/movies_entities.dart';
 import 'package:movie_app/presentation_layer/screens/home/movie_carousel/movie_data.dart';
 import 'package:movie_app/presentation_layer/widgets/movie_appbar.dart';
 import 'package:movie_app/presentation_layer/widgets/separator.dart';
-import 'movie_backdrop.dart';
-import 'movie_page_view.dart';
+import 'package:movie_app/presentation_layer/screens/home/movie_carousel/movie_backdrop.dart';
+import 'package:movie_app/presentation_layer/screens/home/movie_carousel/movie_page_view.dart';
 
 class MoviesCarousel extends StatelessWidget {
   final List<MoviesEntities> movies;

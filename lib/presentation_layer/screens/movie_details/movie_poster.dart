@@ -7,7 +7,6 @@ import 'package:movie_app/domain_layer/entities/movie_detail_entities.dart';
 import 'package:movie_app/common/extensions/num_extension.dart';
 import 'package:movie_app/presentation_layer/themes/text_theme.dart';
 import 'package:movie_app/common/extensions/size_extensions.dart';
-
 import 'movie_detail_appbar.dart';
 
 class MoviePoster extends StatelessWidget {
@@ -55,7 +54,9 @@ class MoviePoster extends StatelessWidget {
         left: AppSizes.size_16.w,
         right: AppSizes.size_16.w,
         top: ScreenUtil.statusBarHeight + AppSizes.size_4.h,
-        child: MovieDetailAppBar(),
+        child: MovieDetailAppBar(
+          movieDetailEntities: movie,
+        ),
       )
     ]);
   }

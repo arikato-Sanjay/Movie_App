@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/common/constants/routes_list.dart';
 import 'package:movie_app/presentation_layer/blocs/movie_trailer/movie_trailer_bloc.dart';
 import 'package:movie_app/presentation_layer/screens/movie_trailers/trailer_arguments.dart';
-import 'package:movie_app/presentation_layer/screens/movie_trailers/trailer_screen.dart';
 import 'package:movie_app/presentation_layer/widgets/app_buttons.dart';
 
 class TrailerButton extends StatelessWidget {
@@ -21,9 +21,7 @@ class TrailerButton extends StatelessWidget {
             return AppButtons(
               title: 'Watch Trailers',
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => TrailerScreen(
-                        trailerArguments: TrailerArguments(_trailers))));
+                Navigator.of(context).pushNamed(RoutesList.movieTrailer, arguments: MovieTrailerArguments(_trailers));
               },
             );
           } else {

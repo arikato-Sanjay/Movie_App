@@ -1,7 +1,7 @@
 import 'package:movie_app/domain_layer/entities/movie_trailer_entities.dart';
 
-class TrailerArguments {
+class MovieTrailerArguments {
   final List<MovieTrailerEntities> trailers;
 
-  TrailerArguments(this.trailers);
+  MovieTrailerArguments(this.trailers);
 }

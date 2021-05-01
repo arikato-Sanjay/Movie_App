@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:movie_app/domain_layer/entities/movie_detail_entities.dart';
 
-class MoviesEntities extends Equatable{
+class MoviesEntities extends Equatable {
   final String posterPath;
   final int id;
   final String backdropPath;
@@ -28,4 +29,16 @@ class MoviesEntities extends Equatable{
   // coz in props we are overriding id and title
   @override
   bool get stringify => true;
+
+  factory MoviesEntities.fromMovieDetailEntities(
+      MovieDetailEntities movieDetailEntities) {
+    return MoviesEntities(
+        posterPath: movieDetailEntities.posterPath,
+        id: movieDetailEntities.id,
+        backdropPath: movieDetailEntities.backdropPath,
+        title: movieDetailEntities.title,
+        overview: movieDetailEntities.overview,
+        voteAverage: movieDetailEntities.voteAverage,
+        releaseDate: movieDetailEntities.releaseDate);
+  }
 }
